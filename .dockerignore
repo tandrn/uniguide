@@ -1,0 +1,13 @@
+Dockerfile
+.dockerignore
+node_modules
+npm-debug.log
+README.md
+.next
+.git
+.env.local
+.DS_Store
+*.db
+build.log
+.gemini
+# We do not ignore data folder because we want it available initially in the image!

@@ -12,6 +12,10 @@
   <img src="https://img.shields.io/badge/License-MIT-yellow" alt="MIT License" />
 </p>
 
+<p align="center">
+  <img src="public/demo.webp" width="300" alt="UNIGUIDE Onboarding Demo" />
+</p>
+
 ---
 
 ## О проекте
