@@ -24,13 +24,12 @@ export default function PathPage() {
         if (recommendations.length === 0) return;
 
         // Если есть пользовательский путь, используем его
-        const selectedProgram = userPath 
-            ? recommendations.find(p => 
-                  p.degree === userPath.educationLevel ||
-                  p.careers.some(c => c.toLowerCase().includes(userPath.careerTrack.toLowerCase()))
-              ) || recommendations[0]
+        const selectedProgram = userPath
+            ? recommendations.find(p =>
+                p.careers.some(c => c.toLowerCase().includes(userPath.careerTrack.toLowerCase()))
+            ) || recommendations[0]
             : recommendations[0];
-            
+
         const altProgram = recommendations[1];
 
         const generatedTimeline: TimelineItem[] = [
