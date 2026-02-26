@@ -1,0 +1,31 @@
+
+> edumatch@0.1.0 build
+> next build
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\daniel zhanyshov\coding\startup_2\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\daniel zhanyshov\coding\startup_2\edumatch\package-lock.json
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.1s
+  Running TypeScript ...
+Failed to compile.
+
+./src/app/path/page.tsx:131:54
+Type error: Property 'recommended' does not exist on type '{ id: string; title: string; subtitle: string; type: string; status: string; progress?: undefined; gpa?: undefined; } | { id: string; title: string; subtitle: string; type: string; status: string; progress: number; gpa: number; } | { ...; } | { ...; }'.
+  Property 'recommended' does not exist on type '{ id: string; title: string; subtitle: string; type: string; status: string; progress?: undefined; gpa?: undefined; }'.
+
+[0m [90m 129 |[39m                                             {item[33m.[39mstatus [33m===[39m [32m"current"[39m [33m?[39m (
+ [90m 130 |[39m                                                 [33m<[39m[33mdiv[39m className[33m=[39m[32m"w-4 h-4 rounded-full bg-accent ring-4 ring-background"[39m [33m/[39m[33m>[39m
+[31m[1m>[22m[39m[90m 131 |[39m                                             ) [33m:[39m item[33m.[39mrecommended [33m?[39m (
+ [90m     |[39m                                                      [31m[1m^[22m[39m
+ [90m 132 |[39m                                                 [33m<[39m[33mdiv[39m className[33m=[39m[32m"w-4 h-4 rounded-full bg-success ring-4 ring-background"[39m [33m/[39m[33m>[39m
+ [90m 133 |[39m                                             ) [33m:[39m (
+ [90m 134 |[39m                                                 [33m<[39m[33mdiv[39m className[33m=[39m[32m"w-3 h-3 rounded-full bg-border ring-4 ring-background"[39m [33m/[39m[33m>[39m[0m
+Next.js build worker exited with code: 1 and signal: null

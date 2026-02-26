@@ -1,0 +1,188 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("SUPABASE_DATABASE_URL")
+}
+
+// ============================================
+// УНИВЕРСИТЕТЫ
+// ============================================
+model University {
+  id          String   @id @default(cuid())
+  name        String   // Полное название (МГТУ им. Н.Э. Баумана)
+  shortName   String   // Краткое (МГТУ)
+  city        String   // Москва, СПб, etc.
+  website     String?
+  description String?
+  logoUrl     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  programs    Program[]
+  
+  @@index([name])
+  @@index([city])
+}
+
+// ============================================
+// ОБРАЗОВАТЕЛЬНЫЕ ПРОГРАММЫ
+// ============================================
+model Program {
+  id              String   @id @default(cuid())
+  name            String   // Название программы
+  description     String?
+  universityId    String
+  university      University @relation(fields: [universityId], references: [id])
+  
+  // Параметры
+  degree          String   // bachelor, master, specialist
+  duration        Int      // лет
+  language        String   // "Рус", "Рус / Eng"
+  city            String
+  passingScore    Int?     // Проходной балл
+  budgetPlaces    Int?
+  costPerYear     Int?     // Стоимость в год (руб)
+  
+  // Метрики
+  rating          Float    @default(0)
+  employment      Int      @default(0) // % трудоустроенных
+  dropout         Int      @default(0) // % отсева
+  satisfaction    Int      @default(0) // % удовлетворённых
+  
+  // Зарплаты
+  expectedSalaryClaimed Int @default(0)
+  expectedSalaryReal  Int @default(0)
+  
+  // Контент
+  aiInsight       String?
+  whyFits         String?
+  theoryPercent   Int      @default(50)
+  practicePercent Int      @default(50)
+  
+  // Теги (храним как JSON для SQLite совместимости)
+  tags            String?  // JSON array
+  hashtags        String?  // JSON array
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Связи
+  subjects        ProgramSubject[]
+  careers         ProgramCareer[]
+  savedBy         UserSavedProgram[]
+  
+  @@index([universityId])
+  @@index([name])
+  @@index([degree])
+}
+
+// ============================================
+// ПРЕДМЕТЫ (дисциплины)
+// ============================================
+model Subject {
+  id          String   @id @default(cuid())
+  name        String   // Название предмета
+  category    String?  // "Математика", "Программирование", etc.
+  description String?
+  createdAt   DateTime @default(now())
+  
+  programs    ProgramSubject[]
+  
+  @@index([name])
+  @@index([category])
+}
+
+// ============================================
+// СВЯЗЬ: Программа <-> Предметы
+// ============================================
+model ProgramSubject {
+  id        String  @id @default(cuid())
+  programId String
+  program   Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+  subjectId String
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  year      Int?    // На каком курсе
+  semester  Int?    // В каком семестре
+  credits   Int?    // Количество кредитов
+  hours     Int?    // Количество часов
+  type      String? // "exam", "pass"
+  
+  @@unique([programId, subjectId])
+  @@index([programId])
+  @@index([subjectId])
+}
+
+// ============================================
+// КАРЬЕРЫ (профессии после выпуска)
+// ============================================
+model Career {
+  id          String   @id @default(cuid())
+  name        String   // "ML Engineer", "Data Scientist"
+  description String?
+  avgSalary   Int?
+  createdAt   DateTime @default(now())
+  
+  programs    ProgramCareer[]
+  
+  @@index([name])
+}
+
+// ============================================
+// СВЯЗЬ: Программа <-> Карьеры
+// ============================================
+model ProgramCareer {
+  id        String  @id @default(cuid())
+  programId String
+  program   Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+  careerId  String
+  career    Career  @relation(fields: [careerId], references: [id], onDelete: Cascade)
+  
+  @@unique([programId, careerId])
+  @@index([programId])
+  @@index([careerId])
+}
+
+// ============================================
+// ПОЛЬЗОВАТЕЛИ
+// ============================================
+model User {
+  id              String   @id @default(cuid())
+  email           String?  @unique
+  name            String?
+  avatarUrl       String?
+  
+  // Предпочтения
+  educationLevel  String?
+  selectedSubjects String?  // JSON array
+  studyFormat     String?
+  careerTrack     String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  savedPrograms   UserSavedProgram[]
+  
+  @@index([email])
+}
+
+// ============================================
+// СОХРАНЁННЫЕ ПРОГРАММЫ
+// ============================================
+model UserSavedProgram {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  programId String
+  program   Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, programId])
+  @@index([userId])
+  @@index([programId])
+}
