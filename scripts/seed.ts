@@ -80,6 +80,7 @@ const programs = [
     degree: "bachelor",
     duration: 4,
     language: "Рус",
+    city: "Москва",
     passingScore: 290,
     budgetPlaces: 80,
     costPerYear: 420000,
@@ -107,6 +108,7 @@ const programs = [
     degree: "bachelor",
     duration: 4,
     language: "Рус / Eng",
+    city: "Москва",
     passingScore: 260,
     budgetPlaces: 60,
     costPerYear: 480000,
@@ -134,6 +136,7 @@ const programs = [
     degree: "bachelor",
     duration: 4,
     language: "Рус / Eng",
+    city: "Москва",
     passingScore: 300,
     budgetPlaces: 50,
     costPerYear: 400000,
@@ -201,11 +204,12 @@ async function seed() {
   // Программы
   console.log("📚 Creating programs...");
   for (const prog of programs) {
+    const { tags, hashtags, ...restProg } = prog;
     await prisma.program.create({
       data: {
-        ...prog,
-        tags: JSON.stringify(prog.tags),
-        hashtags: JSON.stringify(prog.hashtags),
+        ...restProg,
+        tags: JSON.stringify(tags),
+        hashtags: JSON.stringify(hashtags),
       },
     });
   }
