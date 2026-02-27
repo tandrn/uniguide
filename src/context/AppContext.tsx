@@ -17,6 +17,7 @@ export interface Program {
     language: string;
     passingScore: number;
     budgetPlaces: number;
+    paidPlaces?: number;
     costPerYear: number;
     description: string;
     whyFits: string;
@@ -57,7 +58,9 @@ export interface UserPath {
     subjects: string[];
     studyFormat: string;
     careerTrack: string;
-    preferredCity?: string;
+    city: string[];
+    budget: number; // 0 for budget-only, or max tuition fee
+    egeScores: Record<string, any>;
 }
 
 export interface ChatMessage {

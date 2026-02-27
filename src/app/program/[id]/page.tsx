@@ -85,28 +85,34 @@ export default function ProgramDetailsPage() {
                 </h1>
 
                 {/* Key stats */}
-                <div className="flex gap-6 mb-12">
+                <div className="flex flex-wrap gap-x-8 gap-y-6 mb-8">
                     <div>
                         <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-tertiary block mb-1">
                             Совпадение
                         </span>
-                        <span className="font-serif text-[24px] text-success">{program.matchPercent}%</span>
+                        <span className="font-serif text-[28px] text-success">{program.matchPercent}%</span>
                     </div>
                     <div>
                         <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-tertiary block mb-1">
-                            Срок
+                            Проходной балл (2024)
                         </span>
-                        <span className="font-serif text-[24px]">{program.duration}</span>
+                        <span className="font-serif text-[28px] text-text-primary">{program.passingScore || "—"}</span>
                     </div>
                     <div>
                         <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-tertiary block mb-1">
-                            Язык
+                            Бюджетных мест
                         </span>
-                        <span className="font-serif text-[24px]">{program.language}</span>
+                        <span className="font-serif text-[28px] text-text-primary">{program.budgetPlaces || "—"}</span>
+                    </div>
+                    <div>
+                        <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-tertiary block mb-1">
+                            Платное ({program.paidPlaces || "—"} мест)
+                        </span>
+                        <span className="font-serif text-[28px] text-text-primary">{program.costPerYear ? `${(program.costPerYear / 1000).toFixed(0)}k ₽/г` : "—"}</span>
                     </div>
                 </div>
 
-                <div className="border-t border-border mb-12" />
+                <div className="border-t border-border mb-8" />
 
                 {/* Why it fits */}
                 <div className="mb-12">

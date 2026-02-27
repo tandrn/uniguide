@@ -129,6 +129,8 @@ CREATE TABLE users (
     "selectedSubjects" TEXT[],
     "studyFormat" TEXT,
     "careerTrack" TEXT,
+    city TEXT[],
+    budget INTEGER,
     "egeScores" JSONB DEFAULT '{}',
     "createdAt" TIMESTAMPTZ DEFAULT NOW(),
     "updatedAt" TIMESTAMPTZ DEFAULT NOW()
