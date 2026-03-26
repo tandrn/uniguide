@@ -3,9 +3,9 @@ rm -f .git/index.lock
 
 git add .
 export GIT_AUTHOR_NAME="Daniel Zhanyshov" 
-export GIT_AUTHOR_EMAIL="danila.zhanyshov@gmail.com" 
+export GIT_AUTHOR_EMAIL="danqtut2@gmail.com" 
 export GIT_COMMITTER_NAME="Daniel Zhanyshov" 
-export GIT_COMMITTER_EMAIL="danila.zhanyshov@gmail.com"
+export GIT_COMMITTER_EMAIL="danqtut2@gmail.com"
 
 # Generate 30 empty commits in the past 30 days instantly
 for i in {30..1}; do 

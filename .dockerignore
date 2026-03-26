@@ -10,4 +10,3 @@ README.md
 *.db
 build.log
 .gemini
-# We do not ignore data folder because we want it available initially in the image!
