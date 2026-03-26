@@ -16,12 +16,6 @@
   <img src="public/demo.webp" width="300" alt="UNIGUIDE Onboarding Demo" />
 </p>
 
----
-<p align="center">
-  <img src="public/demo.webp" width="300" alt="UNIGUIDE Onboarding Demo" />
-</p>
-
----
 
 ## О проекте
 
