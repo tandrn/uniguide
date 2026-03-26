@@ -66,7 +66,7 @@ export default function LoadingPage() {
 
             {/* Cancel */}
             <button
-                onClick={() => router.push("/goals")}
+                onClick={() => router.push("/start")}
                 className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-tertiary hover:text-text-secondary transition-colors mt-16"
             >
                 Отменить

@@ -11,12 +11,20 @@ const EDUCATION_LEVELS = [
 ];
 
 const CAREER_TRACKS = [
-    { id: "development", title: "Разработка", detail: "Программист, Software Engineer" },
-    { id: "data-science", title: "Data Science", detail: "Аналитик данных, Machine Learning" },
-    { id: "management", title: "Менеджмент", detail: "Управление продуктом, продакт-менеджер" },
-    { id: "design", title: "Дизайн", detail: "UX/UI, графический дизайн" },
-    { id: "science", title: "Наука", detail: "Исследования, PhD" },
-    { id: "undecided", title: "Пока не решил", detail: "Хочу изучить варианты" },
+    { id: "development", title: "Разработка / IT", detail: "Software Engineer, Frontend/Backend" },
+    { id: "data-science", title: "Data Science & Аналитика", detail: "Аналитик, Machine Learning" },
+    { id: "management", title: "Менеджмент / Управление", detail: "Product Manager, Руководитель" },
+    { id: "design", title: "Дизайн (UX/UI)", detail: "Продуктовый дизайнер, Графика" },
+    { id: "law", title: "Юриспруденция / Право", detail: "Юрист, Адвокат, Нотариус" },
+    { id: "medicine", title: "Медицина / Здоровье", detail: "Врач, Фармацевт, Биотехнолог" },
+    { id: "engineering", title: "Инженерия", detail: "Проектировщик, Робототехник" },
+    { id: "media", title: "Медиа / PR", detail: "Журналист, Редактор, Пиар-менеджер" },
+    { id: "economics", title: "Экономика / Финансы", detail: "Экономист, Финансовый аналитик" },
+    { id: "government", title: "Государственное управление", detail: "Госслужащий, Дипломат" },
+    { id: "science", title: "Наука / Исследования", detail: "Ученый, Исследователь, PhD" },
+    { id: "education", title: "Образование", detail: "Преподаватель, Педагог, Методист" },
+    { id: "marketing", title: "Маркетинг / Реклама", detail: "Маркетолог, Таргетолог, Бренд" },
+    { id: "undecided", title: "Пока не решил", detail: "Хочу изучить все варианты" },
 ];
 
 const STUDY_FORMATS = [

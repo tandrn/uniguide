@@ -1,7 +1,10 @@
 {
-  "name": "edumatch",
-  "version": "0.1.0",
-  "private": true,
+  "name": "uniguide",
+  "version": "1.0.0",
+  "description": "AI-powered university program matching platform with RAG chatbot",
+  "author": "Daniel Zhanyshov",
+  "license": "MIT",
+  "repository": {"type":"git","url":"https://github.com/tandrn/uniguide.git"},
   "scripts": {
     "dev": "next dev",
     "build": "next build",

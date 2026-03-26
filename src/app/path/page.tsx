@@ -33,6 +33,7 @@ export default function PathPage() {
     const { recommendations, isLoading, userPath, setUserPath, user } = useAppContext();
     const [timeline, setTimeline] = useState<TimelineItem[]>([]);
     const [showProgramPicker, setShowProgramPicker] = useState(false);
+    const [currentStage, setCurrentStage] = useState<"applicant" | "year1" | "year2" | "year3" | "year4">("year1");
 
     // Deep Dive State
     const [selectedSemester, setSelectedSemester] = useState<TimelineItem | null>(null);
@@ -76,17 +77,22 @@ export default function PathPage() {
         const externalCourses = userPath?.egeScores?.externalCourses || [];
         const hasFailedTask = Object.values(passedTasks).some(v => v === false);
 
-        // Generate base timeline
-        let generatedTimeline: TimelineItem[] = [
-            {
-                id: "stage_current",
-                stage: "current",
-                title: baseProgram.name,
-                subtitle: `${baseProgram.universityShort} · Бакалавриат`,
-                detail: `${baseProgram.duration} года · Ср. балл ЕГЭ: ${egeAvg}/100`,
-                progress: 25, // e.g. end of 1st year
-            },
-            {
+        // Timeline Generation Logic based on Current Stage
+        let generatedTimeline: TimelineItem[] = [];
+
+        // Base/Current Stage Node
+        generatedTimeline.push({
+            id: "stage_current",
+            stage: "current",
+            title: baseProgram.name,
+            subtitle: `${baseProgram.universityShort} · Бакалавриат`,
+            detail: `${baseProgram.duration} года · Ср. балл ЕГЭ: ${egeAvg}/100`,
+            progress: currentStage === "applicant" ? 0 : currentStage === "year1" ? 25 : currentStage === "year2" ? 50 : currentStage === "year3" ? 75 : 100,
+        });
+
+        // Semester 1 (1st Year)
+        if (currentStage === "applicant" || currentStage === "year1") {
+            generatedTimeline.push({
                 id: "sem_1",
                 stage: "semester",
                 title: "1 курс · Весна",
@@ -98,8 +104,12 @@ export default function PathPage() {
                     { id: "task_math", name: "Математический анализ", passed: passedTasks["task_math"] === true },
                     { id: "task_prog", name: "Основы программирования", passed: passedTasks["task_prog"] === true }
                 ]
-            },
-            {
+            });
+        }
+
+        // Semester 3 (2nd Year)
+        if (currentStage !== "year3" && currentStage !== "year4") {
+            generatedTimeline.push({
                 id: "sem_3",
                 stage: "semester",
                 title: "2 курс · Осень",
@@ -110,8 +120,8 @@ export default function PathPage() {
                 tasks: [
                     { id: "task_algo", name: "Алгоритмы и структуры", passed: passedTasks["task_algo"] === true }
                 ]
-            }
-        ];
+            });
+        }
 
         // Scenario 1: Gap Constructor Trigger (only if not already added external course)
         if (!externalCourses.includes("sql_course") && currentGoal.name.includes("Интеллект")) {
@@ -162,7 +172,7 @@ export default function PathPage() {
         });
 
         setTimeline(generatedTimeline);
-    }, [recommendations, userPath, egeAvg, simulatedGoalId]);
+    }, [recommendations, userPath, egeAvg, simulatedGoalId, currentStage]);
 
     const syncUserData = async (updates: any) => {
         if (!userPath) return;
@@ -340,12 +350,25 @@ export default function PathPage() {
                     <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-tertiary">
                         Траектория
                     </span>
-                    <button
-                        onClick={() => setShowProgramPicker(true)}
-                        className="text-[12px] font-mono uppercase tracking-[0.05em] px-3 py-1.5 border border-border rounded-lg hover:border-text-primary transition-colors text-text-secondary"
-                    >
-                        Сменить цель (А что если?)
-                    </button>
+                    <div className="flex gap-2">
+                        <select
+                            value={currentStage}
+                            onChange={(e) => setCurrentStage(e.target.value as any)}
+                            className="bg-transparent text-[11px] font-mono text-text-secondary border border-border rounded px-2 py-1 outline-none hover:border-text-tertiary focus:border-text-primary transition-colors appearance-none cursor-pointer"
+                        >
+                            <option value="applicant">Абитуриент</option>
+                            <option value="year1">1 курс</option>
+                            <option value="year2">2 курс</option>
+                            <option value="year3">3 курс</option>
+                            <option value="year4">4 курс (Выпуск)</option>
+                        </select>
+                        <button
+                            onClick={() => setShowProgramPicker(true)}
+                            className="text-[12px] font-mono uppercase tracking-[0.05em] px-3 py-1.5 border border-border rounded-lg hover:border-text-primary transition-colors text-text-secondary whitespace-nowrap"
+                        >
+                            Сменить цель
+                        </button>
+                    </div>
                 </div>
                 <h1 className="font-serif text-[32px] leading-[1.15] text-text-primary mb-2">
                     Образовательный путь
@@ -430,7 +453,7 @@ export default function PathPage() {
                                                 <h3 className="font-sans font-medium text-[15px] text-text-primary">{item.title}</h3>
                                                 <p className="text-[13px] text-text-tertiary mt-1">{item.subtitle}</p>
                                             </div>
-                                            <span className="font-mono text-[11px] text-text-tertiary border border-border px-2 py-1 rounded hidden sm:inline-block">Details →</span>
+                                            <span className="font-mono text-[11px] text-text-tertiary border border-border px-2 py-1 rounded hidden sm:inline-block">Подробнее →</span>
                                         </div>
 
                                         {/* Task Checkboxes */}

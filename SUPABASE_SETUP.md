@@ -35,7 +35,7 @@
 
 ```env
 # DeepSeek API
-DEEPSEEK_API_KEY=sk-b95daac1a6864f42a5256e4611802e26
+DEEPSEEK_API_KEY=your-deepseek-api-key
 
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
